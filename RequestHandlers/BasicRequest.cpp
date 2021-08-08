@@ -10,13 +10,20 @@ RequestHandler *BasicRequest::CreateRequestHandler() {
 
 Response BasicRequest::OnGetRequest(Request* request) {
     Response response;
-    response.SetBodyFromString("<html><body>HOLA Q HACE</body></html>");
+    response.SetBody(TemplateManager::GetInstance()->GetDataFromTemplate("template",{{"title","Redone"},
+                                                                                     {"form_action","/registration_form"},
+                                                                                     {"number","4"}
+                                                                                }));
     return response;
 }
 
 Response BasicRequest::OnPostRequest(Request* request) {
     Response response;
-    response.SetBodyFromString(R"({"rest": "Soy rest"})");
+    nlohmann::json body_data = request->GetBodyAsJson();
+    std::string sql_command = body_data["sql"];
+    nlohmann::json response_data;
+    response_data["sql_redone"] = sql_command;
+    response.SetBodyFromString(response_data.dump(4));
     response.SetHeader("Content-Type","application/json");
     return response;
 }

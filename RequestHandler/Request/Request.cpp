@@ -43,3 +43,7 @@ std::string Request::GetPath() {
     return this->path;
 }
 
+nlohmann::json Request::GetBodyAsJson() {
+    return nlohmann::json::parse(this->body);
+}
+

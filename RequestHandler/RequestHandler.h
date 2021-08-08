@@ -7,6 +7,8 @@
 
 #include "Response/Response.h"
 #include "Request/Request.h"
+#include "JsonParser/json.hpp"
+#include "TemplateManager/TemplateManager.h"
 
 class RequestHandler {
 public:

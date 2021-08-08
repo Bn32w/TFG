@@ -14,10 +14,12 @@
 #define PORT 8888
 #define CONNECTION_FLAG MHD_USE_INTERNAL_POLLING_THREAD
 #define STATIC_FILE_PATH "/home/bn32w/TFG/static"
+#define TEMPLATE_FILE_PATH "/home/bn32w/TFG/template"
 
 const std::map<std::string,RequestHandler*> handler_configuration = {
         {"/",new BasicRequest()},
-        {"/registration_form",new RegistrationRequest()}
+        {"/registration_form",new RegistrationRequest()},
+        {"/login", new RegistrationRequest()}
 };
 
 const std::map<std::string,std::string> mime_types = {

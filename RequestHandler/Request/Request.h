@@ -10,6 +10,7 @@
 #include <microhttpd.h>
 #include <vector>
 #include <iostream>
+#include "../JsonParser/json.hpp"
 
 class Request {
 public:
@@ -20,6 +21,7 @@ public:
     void AddDataToBody(const char *upload_data, size_t upload_data_size );
     std::string GetMethod();
     std::string GetPath();
+    nlohmann::json GetBodyAsJson();
 private:
     std::map<std::string,std::string> headers;
     std::map<std::string,std::string> params;
