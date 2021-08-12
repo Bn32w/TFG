@@ -78,7 +78,21 @@ void TemplateManager::DoStringReplacement(std::vector<uint8_t> &original_data, s
 std::vector<uint8_t> TemplateManager::GetProcessedData(std::vector<uint8_t> original_data, std::map<std::string, std::string> variables) {
     std::vector<uint8_t> processed_data = this->TreatStrings(original_data,variables);
     std::vector<CodeBlock> code_blocks = this->SplitIntoCodeBlocks(processed_data);
-
+    while(!this->IsCodeBlockFinished(code_blocks)){
+        std::vector<CodeBlock> operated_code_blocks;
+        for(auto it = code_blocks.begin(); it!=code_blocks.end();it++){
+            if(it->type==IF_STATEMENT){
+                if(it->code.size()==1 && !it->condition){
+                }else{
+                    std::vector<CodeBlock> aux_code_blocks = this->SplitIntoCodeBlocks(it->condition?it->code[0]:it->code[1]);
+                    operated_code_blocks.insert(operated_code_blocks.end(),aux_code_blocks.begin(),aux_code_blocks.end());
+                }
+            }else{
+                operated_code_blocks.push_back(*it);
+            }
+        }
+        code_blocks = operated_code_blocks;
+    }
     processed_data = this->MergeCodeBlocks(code_blocks);
     processed_data = this->CleanEscapedStrings(processed_data);
     return processed_data;
@@ -211,6 +225,16 @@ CodeBlock TemplateManager::ReadIfStatement(std::vector<uint8_t>& data) {
         }
     }
     code_block.condition = this->ParseCondition(code_block.condition_string);
+    for(int i=0;i<6;i++){
+        data.erase(data.begin());
+    }
+    if(!(data[0]==' ' && data[1]=='&' && data[2]=='}')){
+        code_block.type==ERROR;
+        return code_block;
+    }
+    data.erase(data.begin());
+    data.erase(data.begin());
+    data.erase(data.begin());
     return code_block;
 }
 
@@ -252,7 +276,7 @@ std::string TemplateManager::GetConditionString(std::vector<uint8_t>& data) {
             number_of_valid_spaces++;
         }
         if(number_of_valid_spaces==1 && (condition_string=="true" || condition_string=="false")){
-            break;
+            return condition_string;
         }
         condition_string += (char) value;
     }
@@ -362,4 +386,15 @@ bool TemplateManager::ParseCondition(std::string condition) {
         return f1!=f2;
     }
     return false;
+}
+
+bool TemplateManager::IsCodeBlockFinished(std::vector<CodeBlock> code_blocks) {
+
+    for(const auto& code : code_blocks){
+        if(code.type!=NORMAL_BLOCK){
+            return false;
+        }
+    }
+
+    return true;
 }

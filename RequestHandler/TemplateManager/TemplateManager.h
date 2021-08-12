@@ -53,6 +53,7 @@ private:
     std::vector<CodeBlock> SplitIntoCodeBlocks(std::vector<uint8_t> data);
     IfFillingState FillVectorForIf(std::vector<uint8_t>& if_data, std::vector<uint8_t>& data);
     bool ParseCondition(std::string condition);
+    bool IsCodeBlockFinished(std::vector<CodeBlock> code_blocks);
 
     static TemplateManager* instance;
     std::string BaseTemplateURL;
