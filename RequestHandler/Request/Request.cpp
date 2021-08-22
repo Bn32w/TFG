@@ -47,3 +47,19 @@ nlohmann::json Request::GetBodyAsJson() {
     return nlohmann::json::parse(this->body);
 }
 
+std::string Request::GetHeader(const std::string& header_name) {
+    return this->headers[header_name];
+}
+
+std::string Request::GetCookie(const std::string& cookie_name) {
+    return this->cookies[cookie_name];
+}
+
+std::map<std::string, std::string> Request::GetParams() {
+    return this->params;
+}
+
+std::vector<uint8_t> Request::GetRawBody() {
+    return this->body;
+}
+

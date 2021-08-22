@@ -22,6 +22,10 @@ public:
     std::string GetMethod();
     std::string GetPath();
     nlohmann::json GetBodyAsJson();
+    std::string GetHeader(const std::string& header_name);
+    std::string GetCookie(const std::string& cookie_name);
+    std::map<std::string,std::string> GetParams();
+    std::vector<uint8_t> GetRawBody();
 private:
     std::map<std::string,std::string> headers;
     std::map<std::string,std::string> params;

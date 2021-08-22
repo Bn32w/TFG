@@ -10,6 +10,7 @@
 #include "../RequestHandler/RequestHandler.h"
 #include "../RequestHandlers/BasicRequest.h"
 #include "../RequestHandlers/RegistrationRequest.h"
+#include "../RequestHandlers/TutorialClass.h"
 
 #define PORT 8888
 #define CONNECTION_FLAG MHD_USE_INTERNAL_POLLING_THREAD
@@ -19,7 +20,8 @@
 const std::map<std::string,RequestHandler*> handler_configuration = {
         {"/",new BasicRequest()},
         {"/registration_form",new RegistrationRequest()},
-        {"/login", new RegistrationRequest()}
+        {"/login", new RegistrationRequest()},
+        {"/tutorial", new TutorialClass()}
 };
 
 const std::map<std::string,std::string> mime_types = {

@@ -10,9 +10,9 @@ RequestHandler *BasicRequest::CreateRequestHandler() {
 
 Response BasicRequest::OnGetRequest(Request* request) {
     Response response;
-    response.SetBody(TemplateManager::GetInstance()->GetDataFromTemplate("template",{{"title","Redone"},
-                                                                                     {"form_action","/registration_form"},
-                                                                                     {"number","4"}
+    response.SetBody(TemplateManager::GetInstance()->GetDataFromTemplate("template",{{"title","HOLA!!"},
+                                                                                     {"form_action","/tutorial"},
+                                                                                     {"number","8"}
                                                                                 }));
     return response;
 }
