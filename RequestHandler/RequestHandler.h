@@ -15,11 +15,11 @@ public:
     virtual RequestHandler* CreateRequestHandler() = 0;
 
     Response HandleRequest(Request* request);
-    virtual Response OnGetRequest(Request* request){return Response();}
-    virtual Response OnPostRequest(Request* request){return Response();}
-    virtual Response OnPutRequest(Request* request){return Response();}
-    virtual Response OnDeleteRequest(Request* request){return Response();}
-    virtual Response OnUnknownRequest(Request* request){return Response();}
+    virtual Response OnGetRequest(Request* request){return Response::GetNotFound();}
+    virtual Response OnPostRequest(Request* request){return Response::GetNotFound();}
+    virtual Response OnPutRequest(Request* request){return Response::GetNotFound();}
+    virtual Response OnDeleteRequest(Request* request){return Response::GetNotFound();}
+    virtual Response OnUnknownRequest(Request* request){return Response::GetNotFound();}
     virtual ~RequestHandler()= default;
 };
 
